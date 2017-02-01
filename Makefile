@@ -10,7 +10,7 @@ GPUCFLAGS = -c
 LFLAGS    = -pthread -shared -fPIC
 GPULFLAGS = -x cu -Xcompiler -fPIC
 GPUDEF    = -DGOOGLE_CUDA=1
-CGPUFLAGS = -lcuda
+CGPUFLAGS = -lcuda # shouldn't it be -lcudart ?? (not found)
 
 SRC       = zero_out.cc
 GPUSRC    = zero_out.cu.cc
@@ -25,3 +25,6 @@ cpu:
 gpu:
 	$(GPUCC) $(CFLAGS) $(GPUCFLAGS) $(GPUSRC) $(GPULFLAGS) -o $(GPUPROD)
 	$(CXX) $(CFLAGS)  $(SRC) $(GPUPROD) $(LFLAGS) $(CGPUFLAGS) -o $(PROD)
+
+clean:
+	rm -f $(PROD) $(GPUPROD)
